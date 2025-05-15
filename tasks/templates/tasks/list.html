@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Minhas Tarefas</h1>
+
+<div class="mb-3">
+    <strong>Filtrar:</strong>
+    <a href="?status=" class="btn btn-sm btn-outline-secondary">Todos</a>
+    <a href="?status=P" class="btn btn-sm btn-outline-warning">Pendentes</a>
+    <a href="?status=A" class="btn btn-sm btn-outline-info">Em Andamento</a>
+    <a href="?status=C" class="btn btn-sm btn-outline-success">Concluídas</a>
+</div>
+
+<a href="{% url 'task_create' %}" class="btn btn-success mb-3">Nova Tarefa</a>
+
+<ul class="list-group">
+    {% for task in tasks %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ task.title }} - {{ task.get_status_display }}
+        <div>
+            <a href="{% url 'task_update' task.pk %}" class="btn btn-sm btn-warning">Editar</a>
+            <a href="{% url 'task_delete' task.pk %}" class="btn btn-sm btn-danger">Excluir</a>
+        </div>
+    </li>
+    {% empty %}
+    <li class="list-group-item">Nenhuma tarefa encontrada.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
